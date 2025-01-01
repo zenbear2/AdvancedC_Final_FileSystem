@@ -43,7 +43,7 @@ typedef struct file_manager{
     bool *block_bitmap;   // Dynamic array to track free/used blocks
     bool *inode_bitmap;   // Tracks free/used inodes
     Block *blocks;        // Dynamically allocated array of blocks
-    Inode *inodes; // Array of inodes (still fixed for simplicity)
+    Inode *inodes;
     uint32_t total_blocks;    // Total number of blocks
     uint32_t total_inodes;    // Total number of inodes
 } FileSystem;
@@ -63,3 +63,6 @@ void read_from_file(FileSystem *fs, int inode_index, uint8_t *buffer, uint32_t s
 int create_directory(FileSystem *fs, const char *name);
 int add_to_directory(FileSystem *fs, int dir_inode_index, int child_inode_index, const char *name);
 void list_directory(FileSystem *fs, int dir_inode_index);
+
+int read_file_to_fs(FileSystem *fs, const char *external_filename, const char *internal_filename);
+int write_file_to_host(FileSystem *fs, int inode_index, const char *external_filename);
