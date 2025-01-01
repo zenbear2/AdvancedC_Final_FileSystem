@@ -2,6 +2,8 @@
 
 int main() {
     FileSystem fs;
+
+#ifndef LOAD_IMG
     uint32_t num_blocks;
 
     // Ask user for the number of blocks
@@ -41,6 +43,9 @@ int main() {
     // List subdirectory contents
     list_directory(&fs, subdir_inode);
 
+    // Save file system as disk image
+    save_file_system(&fs, "disk_image.bin");
+
 
 
     // Print the total number of blocks
@@ -49,6 +54,29 @@ int main() {
 
     // Clean up
     cleanup_file_system(&fs);
+#endif
+
+
+#ifdef LOAD_IMG
+
+    load_file_system(&fs, "disk_image.bin");
+
+    // List root directory contents
+    list_directory(&fs, 0);
+
+    // List subdirectory contents
+    list_directory(&fs, 2);
+
+    uint8_t buffer[BLOCK_SIZE] = {0};
+    int file3_inode = 4;
+
+    read_from_file(&fs, file3_inode, buffer, fs.inodes[file3_inode].size);
+    printf("\n--------------------------Test context begin-------------------------\n\n");
+    printf("Read from file: %s\n", buffer);
+    printf("\n---------------------------Test context end--------------------------\n\n");
+
+#endif
+
     return 0;
 }
 
