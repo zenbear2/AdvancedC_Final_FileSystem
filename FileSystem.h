@@ -65,12 +65,9 @@ void read_from_file(FileSystem *fs, int inode_index, uint8_t *buffer, uint32_t s
 int create_directory(FileSystem *fs, const char *name);
 int add_to_directory(FileSystem *fs, int dir_inode_index, int child_inode_index, const char *name);
 void list_directory(FileSystem *fs, int dir_inode_index);
-<<<<<<< Updated upstream
-=======
 
 int read_file_to_fs(FileSystem *fs, const char *external_filename, const char *internal_filename);
 int write_file_to_host(FileSystem *fs, int inode_index, const char *external_filename);
 
 void save_file_system(FileSystem *fs, const char *image_filename);
 void load_file_system(FileSystem *fs, const char *image_filename);
->>>>>>> Stashed changes
