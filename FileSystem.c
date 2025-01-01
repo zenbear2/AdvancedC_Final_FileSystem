@@ -39,18 +39,27 @@ void initialize_file_system(FileSystem *fs, uint32_t num_blocks) {
         exit(1);
     }
 
+
     // Initialize block bitmap
+    #ifdef DEBUG
     printf("Initialize block bitmap !\n");
+    #endif
+
     for (uint32_t i = 0; i < num_blocks; i++) {
         fs->block_bitmap[i] = false;
     }
 
     // Initialize inode bitmap
+    #ifdef DEBUG
     printf("Initialize inode bitmap !\n");
+    #endif
     for (int i = 0; i < num_inode; i++) {
         fs->inode_bitmap[i] = false;
     }
+
+
     printf("File System Memory allocated\n");
+
 }
 
 void cleanup_file_system(FileSystem *fs) {
@@ -127,7 +136,8 @@ void read_from_file(FileSystem *fs, int inode_index, uint8_t *buffer, uint32_t s
 
     for (int i = 0; i < DIRECT_POINTERS && remaining > 0; i++) {
         if (inode->blocks[i] == 0) {
-            printf("Block not allocated! i=%d\n",i);
+            //printf("Block not allocated! i=%d\n",i);
+            //first block must br zore, so first text have bug 
             //return;
         }
 
@@ -193,8 +203,6 @@ void list_directory(FileSystem *fs, int dir_inode_index) {
     }
 }
 
-<<<<<<< Updated upstream
-=======
 int read_file_to_fs(FileSystem *fs, const char *external_filename, const char *internal_filename) {
     FILE *file = fopen(external_filename, "rb");
     if (!file) {
@@ -421,4 +429,3 @@ void load_file_system(FileSystem *fs, const char *image_filename) {
     printf("File system loaded from disk image '%s'. Total blocks: %u\n", image_filename, fs->total_blocks);
 }
 
->>>>>>> Stashed changes
